@@ -1,4 +1,26 @@
-- name: Send Email
+name: Daily Homework Reminder
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install EmailJS
+        run: npm install @emailjs/nodejs
+      
+      - name: Send Email
         env:
           SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
           TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
@@ -36,42 +58,3 @@
           });
           EOF
           node send-email.js
-```
-
-Notice the change: Added `privateKey: process.env.PRIVATE_KEY` on the line after publicKey.
-
----
-
-## Your Other Questions:
-
-### "If I make this an actual website outside of Claude, will it work?"
-
-**Yes!** This GitHub Action is completely separate from your Claude artifact. It works independently:
-- The planner in Claude = runs in your browser
-- GitHub Action = runs on GitHub's servers automatically every day
-- They're separate right now
-
-**However**, they use separate task lists:
-- Claude planner = tasks stored in localStorage (your browser)
-- GitHub Action = tasks stored in `tasks.json` (GitHub)
-
-Right now you'd need to manually update `tasks.json` on GitHub with your tasks.
-
----
-
-### "What is the email sending?"
-
-The email will contain:
-- **Subject**: `📚 Daily Homework - [today's date]`
-- **Body**: A list of your incomplete tasks from `tasks.json`
-
-Example:
-```
-Hi!
-
-Here are your tasks for today:
-
-- Math homework (math)
-- Read chapter 5 (english)
-
-Get it done! 💪
