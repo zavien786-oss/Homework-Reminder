@@ -1,73 +1,34 @@
-  name: Daily Homework Reminder                                                 
-                                                
-  on:                                                                           
-    schedule:                                               
+name: Daily Homework Reminder                                                 
+                                                                                
+  on:                                                       
+    schedule:
       - cron: '10 2 * * *'
-    workflow_dispatch:                                                          
-    push:                                          
-      branches: [main]                                                          
-                                         
-  jobs:
+    workflow_dispatch:
+    push:                                                                       
+      branches: [main]
+                                                                                
+  jobs:                                                     
     send-reminder:
       runs-on: ubuntu-latest
-
       steps:
         - name: Checkout repo
-          uses: actions/checkout@v4
-                                                                                
-        - name: Setup Node.js                        
-          uses: actions/setup-node@v4                                           
-          with:                          
+          uses: actions/checkout@v4                                             
+   
+        - name: Setup Node.js                                                   
+          uses: actions/setup-node@v4                       
+          with:                                                                 
             node-version: 18
-
-        - name: Install EmailJS
-          run: npm install @emailjs/nodejs
                                                                                 
-        - name: Debug time                              
-          run: date                                                             
-                                         
-        - name: Send Email
+        - name: Install EmailJS                             
+          run: npm install @emailjs/nodejs
+
+        - name: Debug time                                                      
+          run: date
+                                                                                
+        - name: Send Email                                  
           env:
             SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
             TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
             PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}                       
             PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
-          run: |                                                                
-            cat << 'EOF' > send-email.js 
-            const emailjs = require('@emailjs/nodejs');                         
-            const fs = require('fs');                      
-                                                                                
-            console.log("Running email job...");
-
-            if (!fs.existsSync('tasks.json')) {
-              console.error('tasks.json not found');
-              process.exit(1);                                                  
-            }                                                  
-                                                                                
-            const data = JSON.parse(fs.readFileSync('tasks.json', 'utf8'));
-            const incompleteTasks = (data.tasks || []).filter(t =>
-  !t.completed);                                                                
-                                                               
-            const taskList = incompleteTasks.length > 0                         
-              ? incompleteTasks.map(t => '- ' + t.text + ' (' + t.subject +
-  ')').join('\\n')                                                              
-              : 'No tasks today!';                             
-                                                                                
-            emailjs.send(                
-              process.env.SERVICE_ID,
-              process.env.TEMPLATE_ID,
-              {                                                                 
-                to_email: data.email,                          
-                date: new Date().toLocaleDateString(),                          
-                task_list: taskList      
-              },
-              {
-                publicKey: process.env.PUBLIC_KEY,
-                privateKey: process.env.PRIVATE_KEY                             
-              }                                                
-            )                                                                   
-            .then(() => { console.log('Email sent successfully!'); })
-            .catch(err => { console.error('Failed:', err); process.exit(1); });
-            EOF                                                                 
-                                                               
-            node send-email.js
+          run: node send-email.js
