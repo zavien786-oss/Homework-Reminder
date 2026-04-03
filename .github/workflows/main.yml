@@ -1,34 +1,34 @@
-name: Daily Homework Reminder                                                 
+  name: Daily Homework Reminder                                                 
                                                                                 
   on:                                                       
     schedule:
       - cron: '19 2 * * *'
-    workflow_dispatch:
-    push:                                                                       
-      branches: [main]
-                                                                                
-  jobs:                                                     
+    workflow_dispatch:                                                          
+    push:
+      branches: [main]                                                          
+                                                            
+  jobs:
     send-reminder:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
-          uses: actions/checkout@v4                                             
-   
+          uses: actions/checkout@v4
+
         - name: Setup Node.js                                                   
-          uses: actions/setup-node@v4                       
+          uses: actions/setup-node@v4
           with:                                                                 
-            node-version: 18
-                                                                                
-        - name: Install EmailJS                             
+            node-version: 18                                
+
+        - name: Install EmailJS
           run: npm install @emailjs/nodejs
 
-        - name: Debug time                                                      
+        - name: Debug time
           run: date
-                                                                                
-        - name: Send Email                                  
+
+        - name: Send Email                                                      
           env:
-            SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
-            TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
-            PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}                       
+            SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}                       
+            TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }} 
+            PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
             PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
           run: node send-email.js
