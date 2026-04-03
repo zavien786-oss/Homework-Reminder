@@ -2,7 +2,7 @@ name: Daily Homework Reminder
 
 on:
   schedule:
-    - cron: '25 1 * * *'
+    - cron: '28 1 * * *'
   workflow_dispatch:
 
 jobs:
