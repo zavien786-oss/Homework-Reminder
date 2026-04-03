@@ -2,7 +2,7 @@
   "tasks": [
     {
       "text": "hello",
-      "subject": "math",
+      "subject": "all",
       "completed": false,
       "priority": "medium",
       "notes": "",
@@ -12,5 +12,5 @@
     }
   ],
   "email": "your-email@gmail.com",
-  "lastUpdated": "2026-04-03T13:01:18.875Z"
+  "lastUpdated": "2026-04-03T13:18:56.302Z"
 }
