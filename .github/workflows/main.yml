@@ -1,74 +1,17 @@
-name: Daily Homework Reminder
+name: Cron Test
 
 on:
   schedule:
-    - cron: '50 0 * * *'
+    - cron: '*/5 * * * *' # every 5 minutes
   workflow_dispatch:
 
 jobs:
-  send-reminder:
+  test-run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: Print message
+        run: echo "Cron is working!"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install @emailjs/nodejs
-
-      - name: Send Email
-        env:
-          SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
-          TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
-          PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
-          PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
-        run: |
-          cat << 'EOF' > send-email.js
-          const emailjs = require('@emailjs/nodejs');
-          const fs = require('fs');
-
-          if (!fs.existsSync('tasks.json')) {
-            console.error('tasks.json not found');
-            process.exit(1);
-          }
-
-          const data = JSON.parse(fs.readFileSync('tasks.json', 'utf8'));
-
-          const incompleteTasks = (data.tasks || []).filter(t => !t.completed);
-
-          const taskList = incompleteTasks.length > 0
-            ? incompleteTasks.map(t => `• ${t.text} (${t.subject})`).join('\n')
-            : 'No tasks today! 🎉';
-
-          async function sendEmail() {
-            try {
-              await emailjs.send(
-                process.env.SERVICE_ID,
-                process.env.TEMPLATE_ID,
-                {
-                  to_email: data.email,
-                  date: new Date().toLocaleDateString(),
-                  task_list: taskList
-                },
-                {
-                  publicKey: process.env.PUBLIC_KEY,
-                  privateKey: process.env.PRIVATE_KEY
-                }
-              );
-
-              console.log('Email sent successfully!');
-            } catch (err) {
-              console.error('Failed:', err);
-              process.exit(1);
-            }
-          }
-
-          sendEmail();
-          EOF
-
-          node send-email.js
+      - name: Show current time
+        run: date
