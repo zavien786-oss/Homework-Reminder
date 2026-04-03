@@ -1,16 +1,16 @@
 {
   "tasks": [
     {
-      "text": "Hello",
+      "text": "hello",
       "subject": "all",
       "completed": false,
       "priority": "medium",
-      "notes": "how are you",
+      "notes": "",
       "dueDate": "",
       "date": "2026-04-03",
       "subtasks": []
     }
   ],
   "email": "your-email@gmail.com",
-  "lastUpdated": "2026-04-03T02:21:47.463Z"
+  "lastUpdated": "2026-04-03T12:58:08.458Z"
 }
