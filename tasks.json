@@ -2,32 +2,15 @@
   "tasks": [
     {
       "text": "Hello",
-      "subject": "all",
+      "subject": "history",
       "completed": false,
       "priority": "medium",
       "notes": "",
       "dueDate": "",
-      "date": "2026-04-03"
-    },
-    {
-      "text": "How Are You",
-      "subject": "french",
-      "completed": false,
-      "priority": "high",
-      "notes": "",
-      "dueDate": "",
-      "date": "2026-04-03"
-    },
-    {
-      "text": "Hello",
-      "subject": "math",
-      "completed": false,
-      "priority": "low",
-      "notes": "My Name is zavien",
-      "dueDate": "2026-04-03",
-      "date": "2026-04-03"
+      "date": "2026-04-04",
+      "subtasks": []
     }
   ],
   "email": "your-email@gmail.com",
-  "lastUpdated": "2026-04-03T01:57:06.241Z"
+  "lastUpdated": "2026-04-03T02:15:47.996Z"
 }
