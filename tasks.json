@@ -8,8 +8,17 @@
       "notes": "",
       "dueDate": "",
       "date": "2026-04-03"
+    },
+    {
+      "text": "How Are You",
+      "subject": "french",
+      "completed": false,
+      "priority": "high",
+      "notes": "",
+      "dueDate": "",
+      "date": "2026-04-03"
     }
   ],
   "email": "your-email@gmail.com",
-  "lastUpdated": "2026-04-03T00:48:32.078Z"
+  "lastUpdated": "2026-04-03T00:48:45.026Z"
 }
