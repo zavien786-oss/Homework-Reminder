@@ -1,16 +1,5 @@
 {
-  "tasks": [
-    {
-      "text": "Hello",
-      "subject": "all",
-      "completed": false,
-      "priority": "medium",
-      "notes": "",
-      "dueDate": "",
-      "date": "2026-04-06",
-      "subtasks": []
-    }
-  ],
+  "tasks": [],
   "email": "zavienumlani@westminster.net",
-  "lastUpdated": "2026-04-06T20:42:20.277Z"
+  "lastUpdated": "2026-04-06T20:43:42.164Z"
 }
